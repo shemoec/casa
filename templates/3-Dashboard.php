@@ -20,25 +20,24 @@
         $getFromB->del_budget_record($_SESSION['UserId']);
     }
 
-    // Obtener y procesar gastos y presupuesto
-    // [Notación condicional reducida para simplificar el código]
+    // Obtener gastos y contribuciones
     $today_expense = $getFromE->Expenses($_SESSION['UserId'], 0) ?? "No Expenses Logged Today";
     $Yesterday_expense = $getFromE->Yesterday_expenses($_SESSION['UserId']) ?? "No Expenses Logged Yesterday";
     $week_expense = $getFromE->Expenses($_SESSION['UserId'], 6) ?? "No Expenses Logged This Week";
     $monthly_expense = $getFromE->Expenses($_SESSION['UserId'], 29) ?? "No Expenses This Month";
     $total_expenses = $getFromE->totalexp($_SESSION['UserId']) ?? "No Expenses Logged Yet";
-
-    $budget_left = $getFromB->checkbudget($_SESSION['UserId']);
     $currmonexp = $getFromE->Current_month_expenses($_SESSION['UserId']) ?? 0;
-    $budget_left = $budget_left ? "$ " . ($budget_left - $currmonexp) : "Not Set Yet";
 
     $user1_id = 3;
     $user2_id = 4;
-
-    $user1_contribution = $getFromU->getUserContribution($user1_id) ?? 0;  // Por defecto, contribución 0 si es NULL
+    $user1_contribution = $getFromU->getUserContribution($user1_id) ?? 0;
     $user2_contribution = $getFromU->getUserContribution($user2_id) ?? 0;
-
     $total_contributions = $user1_contribution + $user2_contribution;
+
+    $initialBudget = 2070;  // Presupuesto inicial
+    $budget_left = ($initialBudget + $total_contributions) - $currmonexp;
+    $budget_left = $budget_left >= 0 ? "$ " . $budget_left : "Exceeded by " . abs($budget_left);
+
     $user1_remaining = 910 - $user1_contribution;
     $user2_remaining = 1160 - $user2_contribution;
 ?>

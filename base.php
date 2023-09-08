@@ -55,12 +55,14 @@
       }
       $stmt->execute();
     }
-    public function addContribution($userId, $amount) {
-      $stmt = $this->pdo->prepare("INSERT INTO contributions (UserId, Amount) VALUES (:userId, :amount)");
+    public function addContribution($userId, $amount, $date) {
+      $stmt = $this->pdo->prepare("INSERT INTO contributions (UserId, Amount, Date) VALUES (:userId, :amount, :date)");
       $stmt->bindParam(":userId", $userId, PDO::PARAM_INT);
       $stmt->bindParam(":amount", $amount, PDO::PARAM_STR); // o PDO::PARAM_INT si no estás usando decimales
+      $stmt->bindParam(":date", $date, PDO::PARAM_STR); // Asumiendo que la fecha está en formato de cadena 'YYYY-MM-DD'
       $stmt->execute();
   }
+  
   }
  
 ?>

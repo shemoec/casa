@@ -74,24 +74,24 @@
     }
 
     public function calculateMonthlyBalance($UserId) {
-    // Obtener el presupuesto inicial
-    $initialBudget = $this->checkbudget($UserId);
-
-    // Obtener total de aportes del mes
-    $stmt = $this->pdo->prepare("SELECT SUM(Amount) AS totalContributions FROM contributions WHERE UserId = :UserId AND MONTH(Date) = MONTH(CURRENT_DATE)");
-    $stmt->bindParam(":UserId", $UserId, PDO::PARAM_INT);
-    $stmt->execute();
-    $contributions = $stmt->fetch(PDO::FETCH_OBJ)->totalContributions;
-
-    // Obtener total de gastos del mes
-    $expenses = $this->Current_month_expenses($UserId);
-
-    // Calcular balance
-    $balance = $initialBudget + $contributions - $expenses;
-
-    return $balance;
-}
-
+      // Obtener el presupuesto inicial
+      $initialBudget = $this->checkbudget($UserId);
+  
+      // Obtener total de aportes del mes
+      $stmt = $this->pdo->prepare("SELECT SUM(Amount) AS totalContributions FROM contributions WHERE UserId = :UserId AND MONTH(Date) = MONTH(CURRENT_DATE)");
+      $stmt->bindParam(":UserId", $UserId, PDO::PARAM_INT);
+      $stmt->execute();
+      $contributions = $stmt->fetch(PDO::FETCH_OBJ)->totalContributions;
+  
+      // Obtener total de gastos del mes
+      $expenses = $this->Current_month_expenses($UserId);
+  
+      // Calcular balance
+      $balance = $initialBudget + $contributions - $expenses;
+  
+      return $balance;
+  }
+  
 
 
   }

@@ -10,10 +10,11 @@
     if(isset($_POST['submitContribution'])) {
         $userId = $_POST['user'];
         $amount = $_POST['amount'];
+        $date = $_POST['contributionDate'];  // <-- Nueva línea para obtener la fecha
 
         // Llamada a la función para insertar el aporte
         $base = new Base($pdo); // Asegúrate de tener $pdo definido en "init.php"
-        $base->addContribution($userId, $amount);
+        $base->addContribution($userId, $amount, $date);  // <-- Modifica la función para aceptar la fecha
 
         $message = "Contribution added successfully!";
     }
@@ -39,6 +40,8 @@
                                 }
                             ?>
                         </select><br><br>
+                               <!-- Añadir un input para la fecha -->
+                        <input type="date" name="contributionDate" required/><br><br>
 
                         <p style="color: green;"><?php echo $message; ?></p> <!-- Mensaje de éxito -->
                         <!-- Cambiar el input de monto -->
